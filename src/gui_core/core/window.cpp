@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include <windows.h>
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
+#include "imgui.h"
 
 #include "window.h"
 
@@ -33,9 +33,7 @@ Window::Window(std::string title, int32_t width, int32_t height)
     glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window)
     {
         Window& window_app = *(Window*)glfwGetWindowUserPointer(window);
-        int message = MessageBox(NULL, TEXT("Are you sure to close the program?"), TEXT("Close window!"), MB_OKCANCEL | MB_ICONQUESTION);
-            if (message == IDOK)
-                window_app.m_running = false;
+        window_app.m_close_popup = true;
     });
 
     glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow* window, int width, int height)
@@ -66,4 +64,29 @@ void Window::PostRender()
 {
     glfwPollEvents();
     glfwSwapBuffers(m_window);
+}
+
+void Window::CloseAppPopup()
+{
+	ImGui::OpenPopup("Close the application?");
+
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+    if (ImGui::BeginPopupModal("Close the application?", NULL, ImGuiWindowFlags_NoResize))
+	{
+		ImGui::Text("Are you sure to close the application?\nActive edits will not be saved!\n\n");
+		ImGui::Separator();
+
+		if (ImGui::Button("Ok", ImVec2(120, 0)))
+			m_running = false;
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel", ImVec2(120, 0)))
+		{
+			ImGui::CloseCurrentPopup();
+            m_close_popup = false;
+		}
+			
+		ImGui::EndPopup();
+	}
 }

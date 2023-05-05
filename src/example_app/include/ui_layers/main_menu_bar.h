@@ -2,19 +2,18 @@
 
 #include <unordered_map>
 
-#include "application.h"
 #include "layer.h"
+#include "application.h"
 
-struct MenuVariables
+struct SettingsVariables
 {
-	bool close_app = false;
     std::unordered_map<std::string, bool> styles = { {"Dark", false}, {"Light", false} };
 };
 
 class MainMenuBar : public Layer
 {
     Application* m_app;
-    MenuVariables menu_variables;
+    SettingsVariables settings_variables;
 
 public:
     MainMenuBar(Application* app);

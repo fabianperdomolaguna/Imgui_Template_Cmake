@@ -1,19 +1,18 @@
 #include <string>
 #include <algorithm>
 
+#include "imgui.h"
+
 #include "application.h"
-#include "imgui_context.h"
 #include "settings_config.h"
 #include "main_menu_bar.h"
-
-#include "imgui.h"
 
 MainMenuBar::MainMenuBar(Application* app) : m_app(app) {}
 
 void MainMenuBar::OnAttach()
 {
 	std::string current_style = GetConfigVariable("GuiStyle");
-	menu_variables.styles[current_style] = true;
+	settings_variables.styles[current_style] = true;
 }
 
 void MainMenuBar::OnRender()
@@ -23,7 +22,7 @@ void MainMenuBar::OnRender()
 		if (ImGui::BeginMenu("File"))
     	{
         	if (ImGui::MenuItem("Exit"))
-				menu_variables.close_app = true;
+				m_app->m_window->m_close_popup = true;
 
         	ImGui::EndMenu();
     	}
@@ -32,13 +31,13 @@ void MainMenuBar::OnRender()
     	{
 			if (ImGui::BeginMenu("Color Theme"))
 			{
-				for (auto& color_style : menu_variables.styles)
+				for (auto& color_style : settings_variables.styles)
 				{
 					if (ImGui::MenuItem(color_style.first.c_str(), "", color_style.second))
 					{
 						ChangeConfigVariable("GuiStyle", color_style.first);
 						UpdateTheme();
-						std::for_each(menu_variables.styles.begin(), menu_variables.styles.end(), 
+						std::for_each(settings_variables.styles.begin(), settings_variables.styles.end(), 
 							[&](auto& pair){ pair.second = false; });
 						color_style.second = true;
 					}
@@ -50,33 +49,5 @@ void MainMenuBar::OnRender()
     	}
 
 		ImGui::EndMainMenuBar();
-	}
-
-	CloseAppPopup(menu_variables.close_app, m_app);
-}
-
-void CloseAppPopup(bool& close_app, Application* app)
-{
-    if (close_app)
-		ImGui::OpenPopup("Close the application?");
-    
-	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-
-	if (ImGui::BeginPopupModal("Close the application?", NULL, ImGuiWindowFlags_NoResize))
-	{
-		ImGui::Text("Are you sure to close the application?\nActive edits will not be saved!\n\n");
-		ImGui::Separator();
-
-		if (ImGui::Button("Ok", ImVec2(120, 0)))
-			app->m_window->m_running = false;
-		ImGui::SameLine();
-		if (ImGui::Button("Cancel", ImVec2(120, 0)))
-		{
-			ImGui::CloseCurrentPopup();
-			close_app = false;
-		}
-			
-		ImGui::EndPopup();
 	}
 }

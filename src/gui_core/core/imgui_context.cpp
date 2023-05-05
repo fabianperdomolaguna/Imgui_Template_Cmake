@@ -1,9 +1,9 @@
-#include "imgui_context.h"
-#include "settings_config.h"
-
 #include "GLFW/glfw3.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
+
+#include "imgui_context.h"
+#include "settings_config.h"
 
 #include "fonts/roboto_regular.h"
 #include "fonts/roboto_bold.h"

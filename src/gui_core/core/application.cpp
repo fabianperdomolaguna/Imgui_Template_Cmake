@@ -1,6 +1,6 @@
-#include "application.h"
-
 #include "imgui.h"
+
+#include "application.h"
 
 Application::Application(std::string window_title)
 {
@@ -16,6 +16,9 @@ void Application::Run()
     {
         m_window->PreRender();
         m_imgui_context->PreRender();
+
+        if (m_window->m_close_popup)
+            m_window->CloseAppPopup();
 
         for (auto& layer_render : m_layer_stack)
 			layer_render->OnRender();

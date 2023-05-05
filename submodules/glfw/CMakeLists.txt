@@ -1,9 +1,8 @@
 include(FetchContent)
 
 FetchContent_Declare(glfw
-   GIT_REPOSITORY https://github.com/glfw/glfw
-   GIT_TAG        3.3.8
-   GIT_SHALLOW    TRUE
+   URL https://github.com/glfw/glfw/archive/refs/tags/3.3.8.tar.gz
+   DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
 
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "Build the GLFW example programs")
