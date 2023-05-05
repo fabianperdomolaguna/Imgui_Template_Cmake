@@ -35,9 +35,15 @@ conda activate env_name
 pip install numpy
 pip install matplotlib
             
+# You can also use a requirements.txt file to install specific packages version
+pip install -r requirements.txt
+    
 # For build stage is required enter the path to the python environment. 
-#Verify Miniconda installation folder and the python environment will as a folder in the folder envs. Here and example:
-/home/computer/miniconda3/envs/env_name/                             
+# Verify Miniconda installation folder and the python environment will as a folder in the folder envs. Here and example:
+/home/computer/miniconda3/envs/env_name/
+
+# You can verify environment folder with the following command
+conda env list                        
 ```
 
 ## 3. Build

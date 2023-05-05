@@ -17,6 +17,10 @@ int main()
         print("[Python] Intrepreter says hello!")
     )");
 
+    auto add_module = py::module::import("scripts.add");
+    auto add = add_module.attr("add");
+    std::cout << "Add result from Python script: " << add(2, 3, 5).cast<int>() << std::endl;
+
     Application* app = new Application("ImGui - OpenGL Context");
 
     app->PushLayerApp<MainMenuBar>();
