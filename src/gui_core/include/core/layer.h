@@ -7,6 +7,5 @@ public:
 
 	virtual void OnAttach() {}
 	virtual void OnDetach() {}
-
 	virtual void OnRender() {}
 };

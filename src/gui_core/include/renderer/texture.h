@@ -1,10 +1,10 @@
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 class Texture 
 {
-    uint32_t image_texture;
+    uint32_t render_texture;
 
 public:
     uint32_t m_width = 0, m_height = 0;

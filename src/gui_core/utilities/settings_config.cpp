@@ -1,5 +1,7 @@
 #include <fstream>
 
+#include "nlohmann/json.hpp"
+
 #include "settings_config.h"
 
 nlohmann::json ReadConfigFile()

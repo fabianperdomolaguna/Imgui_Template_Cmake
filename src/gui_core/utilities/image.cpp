@@ -1,4 +1,4 @@
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 
 #include "glad/glad.h"

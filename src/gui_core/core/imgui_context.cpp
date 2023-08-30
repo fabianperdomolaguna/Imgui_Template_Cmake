@@ -1,13 +1,13 @@
+#include <unordered_map>
+#include <string>
+#include <any>
+
 #include "GLFW/glfw3.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
 
 #include "imgui_context.h"
 #include "settings_config.h"
-
-#include "fonts/roboto_regular.h"
-#include "fonts/roboto_bold.h"
-#include "fonts/roboto_italic.h"
 
 std::unordered_map <std::string, std::any> color_styles{ {"Dark", SetDarkTheme}, {"Light", SetLightTheme} };
 
@@ -22,9 +22,9 @@ ImguiContext::ImguiContext(GLFWwindow* window)
     // Load default font
     ImFontConfig fontConfig;
     fontConfig.FontDataOwnedByAtlas = false;
-    io.Fonts->AddFontFromMemoryCompressedTTF(g_RobotoBold, g_RobotoBold_size, 18.0f, &fontConfig);
-    io.Fonts->AddFontFromMemoryCompressedTTF(g_RobotoItalic, g_RobotoItalic_size, 18.0f, &fontConfig);
-    io.FontDefault = io.Fonts->AddFontFromMemoryCompressedTTF(g_RobotoRegular, g_RobotoRegular_size, 18.0f, &fontConfig);
+    io.FontDefault = io.Fonts->AddFontFromFileTTF("fonts/Roboto_Regular.ttf", 18.0f, &fontConfig);
+    ImFont* italic = io.Fonts->AddFontFromFileTTF("fonts/Roboto_Italic.ttf", 18.0f, &fontConfig);
+    ImFont* bold = io.Fonts->AddFontFromFileTTF("fonts/Roboto_Bold.ttf", 18.0f, &fontConfig);
 
     ImGuiStyle& style = ImGui::GetStyle();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -178,6 +178,7 @@ void SetDarkTheme()
 
     colors[ImGuiCol_DragDropTarget] = bg_color;
     colors[ImGuiCol_NavHighlight] = bg_color;
+    
     colors[ImGuiCol_DockingPreview] = panel_active_color;
 
     style.WindowPadding = ImVec2(2, 2);

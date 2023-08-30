@@ -1,10 +1,10 @@
-#include "imgui.h"
+#include <memory>
 
 #include "application.h"
 
 Application::Application(std::string window_title)
 {
-    m_window = std::make_unique<Window>("ImGui - OpenGL Context", 1200, 600);
+    m_window = std::make_unique<Window>(window_title, 1200, 600);
     m_imgui_context = std::make_unique<ImguiContext>(m_window->m_window);
 }
 
